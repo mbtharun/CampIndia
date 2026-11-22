@@ -94,13 +94,16 @@ const styleSrcUrls = [
     "https://api.tiles.mapbox.com",
     "https://fonts.googleapis.com",
     "https://use.fontawesome.com",
+    "https://cdn.jsdelivr.net",
 ];
 const connectSrcUrls = [
     "https://api.mapbox.com",
     "https://*.tiles.mapbox.com",
     "https://events.mapbox.com",
 ];
-const fontSrcUrls = [];
+const fontSrcUrls = [
+    "https://fonts.gstatic.com",
+];
 app.use(
     helmet.contentSecurityPolicy({
         directives: {
@@ -116,6 +119,7 @@ app.use(
                 "blob:",
                 "data:",
                 "https://res.cloudinary.com/or1mdcsn/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
+                "https://res.cloudinary.com/douqbebwk/", // demo images shipped in seeds/
                 "https://images.unsplash.com",
             ],
             fontSrc: ["'self'", ...fontSrcUrls],
@@ -133,6 +137,7 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
     res.locals.currentUser = req.user;
+    res.locals.currentPath = req.path;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     next();
@@ -145,7 +150,7 @@ app.use('/campgrounds/:id/reviews', reviewRoutes)
 
 
 app.get('/', (req, res) => {
-    res.render('home')
+    res.render('home', { pageStyles: ['/stylesheets/home.css'] })
 });
 
 

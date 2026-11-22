@@ -1,24 +1,66 @@
-<nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-        <!-- <a class="navbar-brand" href="#">YelpCamp</a> -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+<%
+    const currentPage = typeof currentPath !== 'undefined' && currentPath ? currentPath : '/';
+    const isHome = currentPage === '/';
+    const isNewCampground = currentPage === '/campgrounds/new';
+    const isExplore = currentPage === '/campgrounds' || (currentPage.indexOf('/campgrounds/') === 0 && !isNewCampground);
+    const isAuthPage = currentPage === '/login' || currentPage === '/register';
+    const ariaCurrent = function (active) { return active ? 'aria-current="page"' : ''; };
+%>
+
+<nav class="navbar navbar-expand-lg ci-navbar" aria-label="Primary">
+    <div class="container">
+        <a class="navbar-brand ci-brand" href="/">
+            <svg class="ci-brand-mark" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"
+                focusable="false">
+                <path d="M3 19.5 9.2 6.8l4.1 8.2 2.1-4.2 5.6 8.7z" fill="currentColor" opacity=".9" />
+                <circle cx="17.6" cy="6.1" r="2.1" fill="currentColor" opacity=".55" />
+            </svg>
+            <span>CampIndia</span>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#primaryNav"
+            aria-controls="primaryNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-link" href="/">Home</a>
-                <a class="nav-link" href="/campgrounds">Campgrounds</a>
-                <a class="nav-link" href="/campgrounds/new">New Campground</a>
-            </div>
-            <div class="navbar-nav ml-auto">
-                <% if(!currentUser) {%>
-                    <a class="nav-link" href="/login">Login</a>
-                    <a class="nav-link" href="/register">Register</a>
-                    <% } else {%>
-                        <a class="nav-link" href="/logout">Logout</a>
-                        <% } %>
-            </div>
+
+        <div class="collapse navbar-collapse" id="primaryNav">
+            <ul class="navbar-nav ci-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link ci-nav-link <%= isHome ? 'active' : '' %>" href="/" <%- ariaCurrent(isHome) %>>Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ci-nav-link <%= isExplore ? 'active' : '' %>" href="/campgrounds" <%- ariaCurrent(isExplore) %>>Explore</a>
+                </li>
+                <% if (currentUser) { %>
+                <li class="nav-item">
+                    <a class="nav-link ci-nav-link <%= isNewCampground ? 'active' : '' %>" href="/campgrounds/new" <%- ariaCurrent(isNewCampground) %>>Add a campground</a>
+                </li>
+                <% } %>
+            </ul>
+
+            <ul class="navbar-nav ci-nav-auth">
+                <% if (!currentUser) { %>
+                <li class="nav-item">
+                    <a class="nav-link ci-nav-login <%= isAuthPage && currentPage === '/login' ? 'active' : '' %>" href="/login">Sign in</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ci-nav-cta" href="/register">Join CampIndia</a>
+                </li>
+                <% } else { %>
+                <li class="nav-item ci-nav-user">
+                    <span class="ci-nav-user-name">
+                        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" focusable="false">
+                            <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm0 2c-4 0-7 2.2-7 5v1h14v-1c0-2.8-3-5-7-5Z"
+                                fill="currentColor" />
+                        </svg>
+                        <span><%= currentUser.username %></span>
+                    </span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link ci-nav-logout" href="/logout">Sign out</a>
+                </li>
+                <% } %>
+            </ul>
         </div>
     </div>
 </nav>

@@ -1,36 +1,146 @@
-body {
-    height: 100vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("https://images.unsplash.com/photo-1559521783-1d1599583485?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80");
+/* =========================================================
+   CampIndia — Home page
+   Uses the tokens declared in app.css
+   ========================================================= */
+
+.ci-hero {
+    position: relative;
+    display: grid;
+    align-items: end;
+    min-height: clamp(420px, 62vh, 620px);
+    padding: clamp(1.75rem, 4vw, 3.5rem);
+    border-radius: var(--ci-radius-xl);
+    overflow: hidden;
+    isolation: isolate;
+    color: var(--ci-text-inverse);
+    box-shadow: var(--ci-shadow-lg);
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.ci-hero-media {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background-image: url("https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=2070&q=80");
     background-size: cover;
     background-position: center;
-    text-shadow: 0 0.05rem 0.1rem rgba(0, 0, 0, 0.5);
-    box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.5);
-}
-.cover-container {
-  max-width: 60vw;
 }
 
-.nav-link {
-    padding: 0.25rem 0;
-    font-weight: 700;
-    color: rgba(255,255,255,0.5);
-    margin-left: 1rem;
-    border-bottom: 0.25rem solid transparent;
+.ci-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(180deg,
+            rgba(22, 33, 28, 0.22) 0%,
+            rgba(22, 33, 28, 0.58) 52%,
+            rgba(22, 33, 28, 0.9) 100%);
 }
 
-.nav-link:hover{
-    color: rgba(255,255,255,0.5);
-    border-bottom-color:rgba(255,255,255,0.5);
+.ci-hero-inner {
+    max-width: 42rem;
 }
 
-.nav-link.active {
-    color: white;
-    border-bottom-color:white;
-
+.ci-hero-eyebrow {
+    display: inline-block;
+    margin: 0 0 var(--ci-space-3);
+    padding: 0.35rem 0.9rem;
+    border: 1px solid rgba(247, 245, 238, 0.35);
+    border-radius: var(--ci-radius-pill);
+    background: rgba(247, 245, 238, 0.12);
+    font-size: var(--ci-text-xs);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(247, 245, 238, 0.92);
 }
 
-.btn-secondary, .btn-secondary:hover{
-    color: #333;
-    text-shadow: none;
+.ci-hero-title {
+    margin: 0 0 var(--ci-space-4);
+    font-family: var(--ci-font-display);
+    font-size: var(--ci-text-3xl);
+    font-weight: 600;
+    line-height: 1.04;
+    letter-spacing: -0.015em;
+    color: var(--ci-text-inverse);
+    text-wrap: balance;
+}
+
+.ci-hero-copy {
+    max-width: 34rem;
+    margin: 0 0 var(--ci-space-5);
+    font-size: var(--ci-text-lg);
+    line-height: 1.65;
+    color: rgba(247, 245, 238, 0.84);
+}
+
+.ci-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ci-space-3);
+}
+
+/* --- Pillars --- */
+
+.ci-pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--ci-space-4);
+    margin-top: var(--ci-space-6);
+}
+
+.ci-pillar {
+    padding: var(--ci-space-5);
+    background: var(--ci-paper);
+    border: 1px solid var(--ci-line);
+    border-radius: var(--ci-radius-lg);
+    box-shadow: var(--ci-shadow-sm);
+}
+
+.ci-pillar-icon {
+    display: block;
+    font-size: 1.35rem;
+    margin-bottom: var(--ci-space-3);
+}
+
+.ci-pillar-title {
+    margin: 0 0 var(--ci-space-2);
+    font-family: var(--ci-font-display);
+    font-size: var(--ci-text-lg);
+    font-weight: 600;
+    color: var(--ci-text);
+}
+
+.ci-pillar-text {
+    margin: 0;
+    font-size: var(--ci-text-sm);
+    line-height: 1.6;
+    color: var(--ci-text-secondary);
+}
+
+@media (max-width: 991.98px) {
+    .ci-hero {
+        min-height: clamp(400px, 55vh, 520px);
+    }
+
+    .ci-pillars {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .ci-hero {
+        min-height: 440px;
+        border-radius: var(--ci-radius-lg);
+    }
+
+    .ci-hero-copy {
+        font-size: var(--ci-text-base);
+    }
+
+    .ci-hero-actions .btn-ci-primary,
+    .ci-hero-actions .btn-ci-ghost {
+        flex: 1 1 100%;
+        justify-content: center;
+    }
 }

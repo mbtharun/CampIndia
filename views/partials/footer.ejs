@@ -1,5 +1,48 @@
-<footer class="footer bg-dark py-3 mt-auto">
+<footer class="ci-footer">
     <div class="container">
-        <span class="text-muted">&copy; CampIndia 2026</span>
+        <div class="row gy-4">
+            <div class="col-12 col-lg-5">
+                <a class="ci-footer-brand" href="/">
+                    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+                        <path d="M3 19.5 9.2 6.8l4.1 8.2 2.1-4.2 5.6 8.7z" fill="currentColor" />
+                    </svg>
+                    <span>CampIndia</span>
+                </a>
+                <p class="ci-footer-tagline">
+                    A community map of India's campgrounds — shared by the people who pitch there.
+                </p>
+            </div>
+
+            <div class="col-6 col-lg-3">
+                <h2 class="ci-footer-heading">Explore</h2>
+                <ul class="ci-footer-links">
+                    <li><a href="/campgrounds">All campgrounds</a></li>
+                    <li><a href="/">Home</a></li>
+                    <% if (currentUser) { %>
+                    <li><a href="/campgrounds/new">Add a campground</a></li>
+                    <% } %>
+                </ul>
+            </div>
+
+            <div class="col-6 col-lg-4">
+                <h2 class="ci-footer-heading">Community</h2>
+                <ul class="ci-footer-links">
+                    <% if (currentUser) { %>
+                    <li><a href="/logout">Sign out</a></li>
+                    <% } else { %>
+                    <li><a href="/register">Create an account</a></li>
+                    <li><a href="/login">Sign in</a></li>
+                    <% } %>
+                    <li><a href="/campgrounds">Read campground reviews</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="ci-footer-bottom">
+            <span>&copy; 2026 CampIndia. All rights reserved.</span>
+            <span class="ci-footer-note">
+                Made for <span aria-hidden="true">🌿</span><span class="visually-hidden">people who love</span> the outdoors
+            </span>
+        </div>
     </div>
 </footer>

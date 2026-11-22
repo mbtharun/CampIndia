@@ -8,21 +8,14 @@ const map = new mapboxgl.Map({
 
 map.addControl(new mapboxgl.NavigationControl(), 'top-right');
 
-
-
-
 map.on('load', function () {
-    // Add a new source from our GeoJSON data and
-    // set the 'cluster' option to true. GL-JS will
-    // add the point_count property to your source data.
+    // Campground pins, clustered by proximity
     map.addSource('campgrounds', {
         type: 'geojson',
-        // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
-        // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
         data: campgrounds,
         cluster: true,
         clusterMaxZoom: 14, // Max zoom to cluster points on
-        clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
+        clusterRadius: 50 // Radius of each cluster when clustering points
     });
 
     map.addLayer({
@@ -31,19 +24,14 @@ map.on('load', function () {
         source: 'campgrounds',
         filter: ['has', 'point_count'],
         paint: {
-            // Use step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
-            // with three steps to implement three types of circles:
-            //   * Blue, 20px circles when point count is less than 100
-            //   * Yellow, 30px circles when point count is between 100 and 750
-            //   * Pink, 40px circles when point count is greater than or equal to 750
             'circle-color': [
                 'step',
                 ['get', 'point_count'],
-                '#00BCD4',
+                '#648c6d',
                 10,
-                '#2196F3',
+                '#4b7256',
                 30,
-                '#3F51B5'
+                '#2f4a39'
             ],
             'circle-radius': [
                 'step',
@@ -64,8 +52,10 @@ map.on('load', function () {
         filter: ['has', 'point_count'],
         layout: {
             'text-field': '{point_count_abbreviated}',
-            'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-            'text-size': 1
+            'text-size': 12
+        },
+        paint: {
+            'text-color': '#fffdf8'
         }
     });
 
@@ -75,14 +65,14 @@ map.on('load', function () {
         source: 'campgrounds',
         filter: ['!', ['has', 'point_count']],
         paint: {
-            'circle-color': '#11b4da',
-            'circle-radius': 4,
-            'circle-stroke-width': 1,
-            'circle-stroke-color': '#fff'
+            'circle-color': '#b4633c',
+            'circle-radius': 5,
+            'circle-stroke-width': 1.5,
+            'circle-stroke-color': '#fffdf8'
         }
     });
 
-    // inspect a cluster on click
+    // Zoom into a cluster on click
     map.on('click', 'clusters', function (e) {
         const features = map.queryRenderedFeatures(e.point, {
             layers: ['clusters']
@@ -101,17 +91,12 @@ map.on('load', function () {
         );
     });
 
-    // When a click event occurs on a feature in
-    // the unclustered-point layer, open a popup at
-    // the location of the feature, with
-    // description HTML from its properties.
+    // Open a popup for a single campground
     map.on('click', 'unclustered-point', function (e) {
         const { popUpMarkup } = e.features[0].properties;
         const coordinates = e.features[0].geometry.coordinates.slice();
 
-        // Ensure that if the map is zoomed out such that
-        // multiple copies of the feature are visible, the
-        // popup appears over the copy being pointed to.
+        // Ensure the popup appears over the copy being pointed to
         while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
             coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
         }
@@ -136,4 +121,3 @@ map.on('load', function () {
         map.getCanvas().style.cursor = '';
     });
 });
-

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-label="Illustration of mountains and a tent">
+    <defs>
+        <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#efe9dc"/>
+            <stop offset="1" stop-color="#d9e2d6"/>
+        </linearGradient>
+    </defs>
+    <rect width="1200" height="800" fill="url(#sky)"/>
+    <circle cx="905" cy="205" r="86" fill="#e4dccc"/>
+    <path d="M0 560 250 300l150 170 130-150 220 250z" fill="#9cb3a0"/>
+    <path d="M420 560 640 330l230 240z" fill="#648c6d"/>
+    <path d="M660 620 860 420l240 220z" fill="#4b7256"/>
+    <rect y="560" width="1200" height="240" fill="#3f6049"/>
+    <path d="M505 700 570 600l65 100z" fill="#f6f3ec"/>
+    <path d="M570 600v100" stroke="#3f6049" stroke-width="4"/>
+</svg>
