@@ -21,7 +21,7 @@ const reviewRoutes = require('./routes/reviews');
 
 const MongoDBStore = require("connect-mongo")(session);
 
-const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp';
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/Camp-india';
 
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
@@ -118,8 +118,7 @@ app.use(
                 "'self'",
                 "blob:",
                 "data:",
-                "https://res.cloudinary.com/or1mdcsn/", //SHOULD MATCH YOUR CLOUDINARY ACCOUNT! 
-                "https://res.cloudinary.com/douqbebwk/", // demo images shipped in seeds/
+                `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/`,
                 "https://images.unsplash.com",
             ],
             fontSrc: ["'self'", ...fontSrcUrls],
